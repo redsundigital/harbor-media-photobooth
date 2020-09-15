@@ -1,12 +1,28 @@
 {
-  "name": "photobooth",
+  "name": "harbor-media-photobooth",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "watch": "nodemon server.js",
+    "mail-test": "node mailer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redsundigital/harbor-media-photobooth.git"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/redsundigital/harbor-media-photobooth/issues"
+  },
+  "homepage": "https://github.com/redsundigital/harbor-media-photobooth#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemailer": "^6.4.11",
+    "twilio": "^3.49.1"
+  }
 }
