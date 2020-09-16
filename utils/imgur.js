@@ -3,11 +3,13 @@ const axios = require('axios');
 const FormData = require('form-data');
 
 function uploadBase64Image(base64str) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {        
         const url = 'https://api.imgur.com/3/upload';
 
         // Remove meta data
         const image = base64str.replace(/^.+data:image\/\w+;base64,/, '');
+
+        console.log('imgur >', `uploading base64 image, strlen: ${image.length}...`);
 
         const data = new FormData();
         data.append('image', image);
@@ -24,13 +26,21 @@ function uploadBase64Image(base64str) {
         };
 
         axios(config)
-            .then(resolve)
-            .catch(reject);
+            .then(response => {
+                console.log('imgur >', `image uploaded: ${response.data.data.link}`);
+                resolve(response);
+            })
+            .catch(err => {
+                console.error('imgur >', `error uploading image: ${err}`);
+                reject(err);
+            });
     });
 }
 
 function deleteImage(deleteHash) {
     return new Promise((resolve, reject) => {
+        console.log('imgur >', `deleting image ${deleteHash}...`);
+
         const url = `https://api.imgur.com/3/image/${deleteHash}`;
 
         const data = new FormData();
@@ -46,8 +56,14 @@ function deleteImage(deleteHash) {
         }
 
         axios(config)
-            .then(resolve)
-            .catch(reject);
+            .then(response => {
+                console.log('imgur >', `image deleted ${deleteHash}`);
+                resolve(response);
+            })
+            .catch(err => {
+                console.error('imgur >', `error deleting image ${deleteHash}: ${err}`);
+                reject(err);
+            });
     });
 }
 

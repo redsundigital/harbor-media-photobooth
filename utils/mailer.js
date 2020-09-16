@@ -17,6 +17,8 @@ const mailOptions = {
 };
 
 async function sendAttachment(to, filename, filepath) {
+  console.log('mailer >', `sending ${filename} to ${to}...`);
+
   return new Promise((resolve, reject) => {
     const options = {
       ...mailOptions,
@@ -33,10 +35,12 @@ async function sendAttachment(to, filename, filepath) {
 
     transporter.sendMail(options, (err, info) => {
       if (err) {
+        console.error('mailer >', `error sending ${filename} to ${to}: ${err}`);
         reject(err);
       } else {
         // Done with image, delete it:
         utils.deleteFile(filepath);
+        console.log('mailer >', `attachment ${filename} successfully sent to ${to}: ${info.response}`);
         resolve(info);
       }
     });
