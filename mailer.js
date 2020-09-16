@@ -2,27 +2,22 @@ require('dotenv').config();
 const nodemailer = require('nodemailer');
 const utils = require('./utils.js');
 
+
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASS
+    user: process.env.NODEMAILER_USER,
+    pass: process.env.NODEMAILER_PASS
   }
 });
 
 const mailOptions = {
-  from: `"Harbor Media Photobooth" <${process.env.GMAIL_USER}>`,
+  from: `"Harbor Media Photobooth" <${process.env.NODEMAILER_USER}>`,
   subject: 'Your photobooth image'
-}
+};
 
-function deleteImage(filepath) {
-  utils.deleteFile(filepath)
-  .then(file => console.log('deleted: %s', file))
-  .catch(console.error)
-}
-
-module.exports = {
-  sendAttachment: async (to, filename, filepath) => {
+async function sendAttachment(to, filename, filepath) {
+  return new Promise((resolve, reject) => {
     const options = {
       ...mailOptions,
       to,
@@ -38,11 +33,14 @@ module.exports = {
 
     transporter.sendMail(options, (err, info) => {
       if (err) {
-        console.log(err);
+        reject(err);
       } else {
-        console.log('nodemailer response: ', info.response)
-        deleteImage(filepath);
+        // Done with image, delete it:
+        utils.deleteFile(filepath);
+        resolve(info);
       }
     });
-  }
+  });
 }
+
+module.exports = { sendAttachment };

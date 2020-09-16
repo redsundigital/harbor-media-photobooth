@@ -2,7 +2,8 @@ const video = document.querySelector('video');
 const canvas = document.querySelector('canvas');
 const startTimerBtn = document.getElementById('start-timer');
 const stopTimerBtn = document.getElementById('stop-timer');
-const sendBtn = document.getElementById('send');
+const emailBtn = document.getElementById('email');
+const textBtn = document.getElementById('text');
 const redoBtn = document.getElementById('redo');
 const clearBtn = document.getElementById('clear');
 
@@ -15,7 +16,7 @@ const videoParams = {
 };
 
 let streamStarted = false;
-let startSecs = 5;
+let startSecs = 2;
 let timer;
 let tick = 0;
 let picture;
@@ -31,29 +32,63 @@ canvas.height = video.offsetHeight;
 
 startTimerBtn.onclick = startTimer;
 stopTimerBtn.onclick = stopTimer;
-sendBtn.onclick = send;
+emailBtn.onclick = sendEmail;
+textBtn.onclick = sendText;
 redoBtn.onclick = redo;
 clearBtn.onclick = clear;
 
 
 function setEnabled(el, enabled = true) {
-    enabled
-        ? el.removeAttribute('disabled')
-        : el.setAttribute('disabled', true);
+    if (Array.isArray(el)) {
+        el.forEach(element => {
+            enabled
+                ? element.removeAttribute('disabled')
+                : element.setAttribute('disabled', true);
+        });
+    } else {
+        enabled
+            ? el.removeAttribute('disabled')
+            : el.setAttribute('disabled', true);
+    }
 }
 
-function sendEmail() {
-    const url = '/email?to=' + 'jason@redsundigitalkc.com'; 
+async function sendEmail() {
+    const to = await prompt('Email recipient');
+    if (to === null) {
+        // Prompt cancelled
+        clear();
+        return;
+    }
+
+    const url = '/email?to=' + to;
     const xhr = new XMLHttpRequest();
     xhr.open('POST', url, true);
     xhr.onload = () => {
+        // TODO: check status for errors
         console.log(xhr.status, xhr.responseText);
     }
     xhr.send(picture);
 }
 
-function send() {
-    sendEmail();
+async function sendText() {
+    // Prompt number
+    // const to = await prompt('Text recipient');
+    // if (to === null) {
+    //     // Prompt cancelled
+    //     clear();
+    //     return;
+    // }
+
+    const to = '+19136878235';
+
+    const url = '/sms?to=' + to;
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.onload = () => {
+        // TODO: check status for errors
+        console.log(xhr.status, xhr.responseText);
+    }
+    xhr.send(picture);
 }
 
 function redo() {
@@ -71,10 +106,7 @@ function takePicture() {
     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
     picture = canvas.toDataURL('image/jpeg', canvasQuality);
 
-    setEnabled(sendBtn);
-    setEnabled(redoBtn);
-
-    send();
+    setEnabled([emailBtn, textBtn, redoBtn]);
 }
 
 function updateTimer() {
@@ -125,11 +157,8 @@ function startStream() {
 }
 
 function init() {
-    setEnabled(stopTimerBtn, false);
-    setEnabled(sendBtn, false);
-    setEnabled(redoBtn, false);
-
     startStream();
+    setEnabled([stopTimerBtn, emailBtn, textBtn, redoBtn], false);
 }
 
 init();

@@ -24,7 +24,7 @@ module.exports = {
     });
   }),
   /**
-   * Removes a file by filepath. 
+   * Removes a file by a filepath. 
    * Rejects with an error if it exists, resolves with the filepath used to delete.
    */
   deleteFile: (filepath) => new Promise((resolve, reject) => {
