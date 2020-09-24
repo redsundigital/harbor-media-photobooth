@@ -1,11 +1,17 @@
 const video = document.querySelector('video');
 const canvas = document.querySelector('canvas');
+const sendemailbtn = document.getElementById('sendemail');
 // const startTimerBtn = document.getElementById('start-timer');
 // const stopTimerBtn = document.getElementById('stop-timer');
 // const emailBtn = document.getElementById('email');
 // const textBtn = document.getElementById('text');
 // const redoBtn = document.getElementById('redo');
 // const clearBtn = document.getElementById('clear');
+
+// TODO: remove
+video.onclick = () => {
+    window.location.reload();
+}
 
 const canvasQuality = 1; // 0..1 in 0.1 increments, 0=low 1=high
 const videoParams = {
@@ -36,7 +42,10 @@ canvas.height = video.offsetHeight;
 // textBtn.onclick = sendText;
 // redoBtn.onclick = redo;
 // clearBtn.onclick = clear;
-
+sendemailbtn.onclick = () => {
+    takePicture();
+    sendEmail();
+};
 
 function setEnabled(el, enabled = true) {
     if (Array.isArray(el)) {
@@ -53,7 +62,7 @@ function setEnabled(el, enabled = true) {
 }
 
 async function sendEmail() {
-    const to = await prompt('Email recipient');
+    const to = await prompt('Email recipient', 'jason@redsundigitalkc.com');
     if (to === null) {
         // Prompt cancelled
         clear();
