@@ -15,7 +15,7 @@ const videoParams = {
     }
 };
 
-let streamStarted = false;
+let videoStreamStarted = false;
 let startSecs = 2;
 let timer;
 let tick = 0;
@@ -79,7 +79,7 @@ async function sendText() {
     //     return;
     // }
 
-    const to = '+19136878235';
+    const to = '+19136878235'; // Todo: remove
 
     const url = '/sms?to=' + to;
     const xhr = new XMLHttpRequest();
@@ -137,18 +137,18 @@ function stopTimer() {
     setEnabled(stopTimerBtn, false);
 }
 
-function startStream() {
-    if (streamStarted) return;
+function startVideoStream() {
+    if (videoStreamStarted) return;
 
     if (navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia(videoParams)
             .then(stream => {
                 video.srcObject = stream;
-                streamStarted = true;
+                videoStreamStarted = true;
             })
             .catch(err => {
                 console.error(err);
-                alert('Error: ' + err);
+                alert('Stream error: ' + err)
             });
     } else {
         console.error('navigator.mediaDevices.getUserMedia is false');
@@ -157,7 +157,7 @@ function startStream() {
 }
 
 function init() {
-    startStream();
+    startVideoStream();
     setEnabled([stopTimerBtn, emailBtn, textBtn, redoBtn], false);
 }
 
