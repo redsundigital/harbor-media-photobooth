@@ -1,11 +1,11 @@
 const video = document.querySelector('video');
 const canvas = document.querySelector('canvas');
-const startTimerBtn = document.getElementById('start-timer');
-const stopTimerBtn = document.getElementById('stop-timer');
-const emailBtn = document.getElementById('email');
-const textBtn = document.getElementById('text');
-const redoBtn = document.getElementById('redo');
-const clearBtn = document.getElementById('clear');
+// const startTimerBtn = document.getElementById('start-timer');
+// const stopTimerBtn = document.getElementById('stop-timer');
+// const emailBtn = document.getElementById('email');
+// const textBtn = document.getElementById('text');
+// const redoBtn = document.getElementById('redo');
+// const clearBtn = document.getElementById('clear');
 
 const canvasQuality = 1; // 0..1 in 0.1 increments, 0=low 1=high
 const videoParams = {
@@ -30,12 +30,12 @@ video.setAttribute('playsinline', '');
 canvas.width = video.offsetWidth;
 canvas.height = video.offsetHeight;
 
-startTimerBtn.onclick = startTimer;
-stopTimerBtn.onclick = stopTimer;
-emailBtn.onclick = sendEmail;
-textBtn.onclick = sendText;
-redoBtn.onclick = redo;
-clearBtn.onclick = clear;
+// startTimerBtn.onclick = startTimer;
+// stopTimerBtn.onclick = stopTimer;
+// emailBtn.onclick = sendEmail;
+// textBtn.onclick = sendText;
+// redoBtn.onclick = redo;
+// clearBtn.onclick = clear;
 
 
 function setEnabled(el, enabled = true) {
@@ -106,12 +106,12 @@ function takePicture() {
     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
     picture = canvas.toDataURL('image/jpeg', canvasQuality);
 
-    setEnabled([emailBtn, textBtn, redoBtn]);
+    // setEnabled([emailBtn, textBtn, redoBtn]);
 }
 
 function updateTimer() {
     if (tick > 0) {
-        startTimerBtn.innerHTML = tick;
+        // startTimerBtn.innerHTML = tick;
         tick--;
     } else {
         takePicture();
@@ -124,8 +124,8 @@ function startTimer() {
     updateTimer();
     timer = setInterval(updateTimer, 1000);
 
-    setEnabled(startTimerBtn, false);
-    setEnabled(stopTimerBtn);
+    // setEnabled(startTimerBtn, false);
+    // setEnabled(stopTimerBtn);
 }
 
 function stopTimer() {
@@ -158,7 +158,7 @@ function startVideoStream() {
 
 function init() {
     startVideoStream();
-    setEnabled([stopTimerBtn, emailBtn, textBtn, redoBtn], false);
+    // setEnabled([stopTimerBtn, emailBtn, textBtn, redoBtn], false);
 }
 
 init();

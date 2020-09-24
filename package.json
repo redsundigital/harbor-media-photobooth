@@ -1,8 +1,11 @@
 {
   "name": "harbor-media-photobooth",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Photobooth web app.",
   "main": "server.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "start": "node server.js",
     "watch": "nodemon server.js",
@@ -13,7 +16,11 @@
     "url": "git+https://github.com/redsundigital/harbor-media-photobooth.git"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Jason Michael",
+    "email": "jason@redsundigitalkc.com",
+    "url": "http://redsundigitalkc.com"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/redsundigital/harbor-media-photobooth/issues"
