@@ -3,8 +3,8 @@ const express = require('express');
 const path = require('path');
 const utils = require('./utils/utils.js');
 const mailer = require('./utils/mailer.js');
-const sms = require('./utils/sms.js');
-const imgur = require('./utils/imgur.js');
+// const sms = require('./utils/sms.js');
+// const imgur = require('./utils/imgur.js');
 
 
 const PORT = process.env.PORT || 3001;
@@ -37,36 +37,36 @@ app.post('/email', (req, res) => {
   });
 });
 
-app.post('/sms', (req, res) => {
-  const to = req.query.to || '+19136878235';
-  let base64str;
+// app.post('/sms', (req, res) => {
+//   const to = req.query.to || '+19136878235';
+//   let base64str;
 
-  // Read the incoming stream
-  req.on('data', stream => base64str += stream);
+//   // Read the incoming stream
+//   req.on('data', stream => base64str += stream);
 
-  // On incoming stream end:
-  req.on('end', async () => {
-    let deletehash;
-    let link;
+//   // On incoming stream end:
+//   req.on('end', async () => {
+//     let deletehash;
+//     let link;
 
-    // Upload image
-    await imgur.uploadBase64Image(base64str)
-      .then(response => {
-        deletehash = response.data.data.deletehash;
-        link = response.data.data.link;
-      })
-      .catch(console.error);
+//     // Upload image
+//     await imgur.uploadBase64Image(base64str)
+//       .then(response => {
+//         deletehash = response.data.data.deletehash;
+//         link = response.data.data.link;
+//       })
+//       .catch(console.error);
 
-    // Send mms
-    if (link) {
-      await sms.sendMms('nodejs', to, [link]).catch(console.error);
-      if (deletehash) {
-        imgur.deleteImage(deletehash);
-      }
-      res.sendStatus(200);
-    }
-  });
-});
+//     // Send mms
+//     if (link) {
+//       await sms.sendMms('nodejs', to, [link]).catch(console.error);
+//       if (deletehash) {
+//         imgur.deleteImage(deletehash);
+//       }
+//       res.sendStatus(200);
+//     }
+//   });
+// });
 
 app.get('*', (req, res) => res.redirect('/'));
 
