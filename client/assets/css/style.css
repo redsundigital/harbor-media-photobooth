@@ -37,10 +37,6 @@
     height: 100vh;
 }
 
-span.accent {
-    color: var(--colorSecondary);
-}
-
 
 
 /* Elements */
@@ -60,6 +56,7 @@ video {
     background: #000;
     object-fit: cover;
     transform: scaleX(-1);
+    pointer-events: none;
 }
 
 canvas {
@@ -109,19 +106,18 @@ canvas {
 }
 
 #hero-cta {
+    flex: 1;
     width: 300px;
     height: 300px;
     max-width: 300px;
     max-height: 300px;
-    background: linear-gradient(120deg, rgba(255, 0, 255, 0.33), rgba(0, 255, 255, 0.33));
-    backdrop-filter: blur(3rem);
+    padding: 3rem;
     border: 3px solid rgba(255, 255, 255, 0.8);
     border-radius: var(--borderRadius);
-    flex: 1;
-    padding: 3rem;
-    outline: none;
+    background: linear-gradient(120deg, rgba(255, 0, 255, 0.33), rgba(0, 255, 255, 0.33));
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-    transition: background 0.33s;
+    transition: background var(--transition);
+    outline: none;
 }
 #hero-cta img {
     width: 100%;
@@ -143,21 +139,26 @@ canvas {
 
 #timer {
     position: absolute;
+    opacity: 0;
+    pointer-events: none
 }
 #timer #countdown-text {
+    position: absolute;
+    z-index: 99;
     color: #eee;
     font-size: 16rem;
-    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0);
 }
 #timer #stop-timer-btn {
     position: absolute;
     width: 120px;
     height: 120px;
     margin: 1rem;
-    border: none;
+    border: 3px solid rgba(0, 0, 0, 0.25);
+    border-radius: 100%;
     left: 0;
     bottom: 0;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.5);
     color: firebrick;
     font-size: 10rem;
     outline: none;
@@ -168,7 +169,20 @@ canvas {
     color: red;
     font-size: 12rem;
 }
-
+#timer #timer-progress {
+    position: absolute;
+}
+.progress-ring {
+    background: rgba(0, 0, 0, 0.2);
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-radius: 100%;
+}
+.progress-ring__circle {
+  transition: calc(var(--transition) * 2) stroke-dashoffset;
+  /* axis compensation */
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
 
 
 /* Results */
@@ -182,6 +196,8 @@ canvas {
     align-items: center;
     justify-content: center;
     bottom: 0;
+    opacity: 0;
+    pointer-events: none;
 }
 #results .email-input-container {
     flex: 3;
@@ -249,9 +265,13 @@ canvas {
     background: linear-gradient(120deg, rgba(255, 0, 255, 1), rgba(0, 255, 255, 1));
     color: #eee;
     outline: none;
+    transition: var(--transition);
 }
 #results #send-email:disabled {
     opacity: 0.33;
+}
+#results #send-email.sent:disabled {
+    opacity: 0.8;
 }
 #results #send-email.sending {
     border: 3px solid #eee;
@@ -262,9 +282,26 @@ canvas {
     border-color: transparent;
     background: forestgreen;
     color: #eee;
+    opacity: 0.8;
 }
 #results #send-email.error {
     border-color: transparent;
     background: firebrick;
     color: #eee;
+}
+
+@keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+.fade-in {
+    animation: fade-in var(--transition) ease-in-out 1 forwards;
+}
+
+@keyframes fade-out {
+    0% { opacity: 1 }
+    100% { opacity: 0; }
+}
+.fade-out {
+    animation: fade-out var(--transition) ease-in-out 1 forwards;
 }
