@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "watch": "nodemon -w client -w . -e js,html,css server.js",
+    "watch": "nodemon server.js",
     "mail-test": "node mailer.js"
   },
   "repository": {

@@ -6,23 +6,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Todo -->
+    <!-- Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
 </head>
 
 <body class="flex-center">
+
     <video></video>
     <canvas></canvas>
-    <!-- <div class="controls flex-center">
-        <button id="start-timer">Start Timer</button>
-        <button id="stop-timer" disabled>Stop Timer</button>
-        <button id="email" disabled>Email</button>
-        <button id="text" disabled>Text</button>
-        <button id="redo" disabled>Redo</button>
-        <button id="clear">Clear</button>
-    </div> -->
-    <div id="camera-view">
-        <p>Free photobooth-style photos straight to your inbox.</p>
-        <button id="sendemail">Send Email</button>
+
+    <div id="home" class="fullscreen flex-center">
+        <div id="hero" class=" fullscreen flex-center">
+            <p class="hero-text-primary flex-center">
+                Free, photobooth-style group photos. <br />
+                Straight to your inbox.
+            </p>
+            <button id="hero-cta" class="flex-center">
+                <img src="assets/img/dslr-camera.svg" alt="dslr-camera-svg" />
+            </button>
+            <p class="hero-text-secondary flex-center">Tap the button above to start the timer.</p>
+        </div>
     </div>
+
+    <div id="timer" class="fullscreen flex-center">
+        <h1 id="countdown-text">5</h1>
+        <button id="stop-timer-btn" class="flex-center">×</button>
+    </div>
+
+    <div id="results">
+        <button id="back">Back</button>
+        <div class="email-input-container">
+            <input type="email" value="jason@redsundigitalkc.com" placeholder="example@email.com" pattern=".+@.+\..+">
+            <span id="clear-email" class="flex-center">×</span>
+        </div>
+        <button id="send-email">Send</button>
+    </div>
+
     <script src="assets/js/app.js"></script>
 </body>
 

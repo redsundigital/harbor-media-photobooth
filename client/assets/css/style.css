@@ -1,14 +1,49 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+@import url(https://fonts.googleapis.com/css?family=Raleway:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
+
+/*
+#E2114B, #1B1B1B
+*/
+
+
+/* Global */
+
+:root {
+    --colorPrimary: #eee;
+    --colorSecondary: #eee;
+    --transition: 0.33s;
+    --borderRadius: 60px;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: "Montserrat", Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
+
+
+
+/* Layout */
 
 .flex-center {
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+.fullscreen {
+    width: 100vw;
+    height: 100vh;
+}
+
+span.accent {
+    color: var(--colorSecondary);
+}
+
+
+
+/* Elements */
 
 html,
 body {
@@ -20,10 +55,11 @@ body {
 
 video {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background: #000;
-    object-fit: fill;
+    object-fit: cover;
+    transform: scaleX(-1);
 }
 
 canvas {
@@ -31,12 +67,204 @@ canvas {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    /* border: 4rem solid black; */
+    transform: scaleX(-1);
 }
 
-#camera-view {
+
+/* Home */
+#home {
+}
+
+#hero {
     position: absolute;
-    background: blue;
-    top: 0;
+    width: 90%;
+    height: 90%;
+    padding: 3rem;
+    border: 2px solid rgba(238, 238, 238, 0.1);
+    border-radius: calc(var(--borderRadius) / 2);
+    flex-direction: column;
+}
+#hero p {
+    width: 100%;
+    flex: 1;
+    color: #fff;
+    font-size: 2rem;
+    text-align: center;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+    align-items: flex-start;
+}
+#hero p:last-child {
+    align-items: flex-end;
+}
+#hero .hero-text-primary {
+    font-family: 'Raleway';
+    font-size: 3.5rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    line-height: 1.5;
+}
+#hero .hero-text-secondary {
+    font-size: 2.5rem;
+    font-weight: 400;
+}
+
+#hero-cta {
+    width: 300px;
+    height: 300px;
+    max-width: 300px;
+    max-height: 300px;
+    background: linear-gradient(120deg, rgba(255, 0, 255, 0.33), rgba(0, 255, 255, 0.33));
+    backdrop-filter: blur(3rem);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    border-radius: var(--borderRadius);
+    flex: 1;
+    padding: 3rem;
+    outline: none;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    transition: background 0.33s;
+}
+#hero-cta img {
+    width: 100%;
+    filter: invert(100);
+    opacity: 0.8;
+}
+#hero-cta:active {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.4);
+}
+#hero-cta:active img {
+    opacity: 1;
+    pointer-events: none;
+} 
+
+
+
+/* Timer */
+
+#timer {
+    position: absolute;
+}
+#timer #countdown-text {
+    color: #eee;
+    font-size: 16rem;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+}
+#timer #stop-timer-btn {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    margin: 1rem;
+    border: none;
     left: 0;
+    bottom: 0;
+    background: transparent;
+    color: firebrick;
+    font-size: 10rem;
+    outline: none;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+    transition: color var(--transition) font-size var(--transition)
+}
+#timer #stop-timer-btn:active {
+    color: red;
+    font-size: 12rem;
+}
+
+
+
+/* Results */
+
+#results {
+    position: absolute;
+    width: 100%;
+    height: 120px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+}
+#results .email-input-container {
+    flex: 3;
+    height: 100%;
+    margin: 0 0.75rem;
+    border-radius: var(--borderRadius);
+    display: flex;
+    background: rgba(0, 0, 0, 0.75);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+#results button {
+    flex: 1;
+    height: 100%;
+    border: none;
+    font-size: 2.2rem;
+    outline: none;
+}
+#results button:hover {
+    cursor: pointer;
+}
+#results input {
+    flex: 3;
+    height: 100%;
+    margin-right: 0;
+    padding: 0 2rem;
+    border: none;
+    background: transparent;
+    color:  var(--colorSecondary);
+    font-size: 2rem;
+    text-align: center;
+    outline: none;
+}
+#results input:hover {
+    cursor: text;
+}
+#results input::placeholder {
+    color: var(--colorSecondary);
+    opacity: 0.4;
+}
+#results #back,
+#results #send-email {
+    border-radius: var(--borderRadius);
+    margin: 0 1rem;
+}
+#results #back {
+    background: rgba(0, 0, 0, 0.75);
+    color: var(--colorSecondary);
+}
+#results #clear-email {
+    flex: 0.45;
+    width: 100%;
+    height: 100%;
+    border-top-right-radius: 60px;
+    border-bottom-right-radius: 60px;
+    color: var(--colorSecondary);
+    font-size: 4rem;
+    transition: var(--transition);
+}
+#results #clear-email:hover {
+    background: var(--colorSecondary);
+    color: #000;
+}
+#results #send-email {
+    background: var(--colorSecondary);
+    background: linear-gradient(120deg, rgba(255, 0, 255, 1), rgba(0, 255, 255, 1));
+    color: #eee;
+    outline: none;
+}
+#results #send-email:disabled {
+    opacity: 0.33;
+}
+#results #send-email.sending {
+    border: 3px solid #eee;
+    background: transparent;
+    color: #eee;
+}
+#results #send-email.sent {
+    border-color: transparent;
+    background: forestgreen;
+    color: #eee;
+}
+#results #send-email.error {
+    border-color: transparent;
+    background: firebrick;
+    color: #eee;
 }
