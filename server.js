@@ -5,6 +5,7 @@ const utils = require('./utils/utils.js');
 const mailer = require('./utils/mailer.js');
 // const sms = require('./utils/sms.js');
 // const imgur = require('./utils/imgur.js');
+const db = require('./utils/database');
 
 
 const PORT = process.env.PORT || 3001;
@@ -31,7 +32,22 @@ app.post('/email', (req, res) => {
 
     if (filepath) {
       mailer.sendAttachment(to, filename, filepath)
-        .then(() => res.sendStatus(200))
+        .then(() => {
+          res.sendStatus(200);
+
+          try {
+            const sql = `INSERT INTO users (email) VALUES(?)`;
+            const values = [req.query.to];
+            db.query(sql, values, (err, results, fields) => {
+              if (err) throw err;
+  
+              console.log('results', results);
+              console.log('fields', fields);
+            });
+          } catch (err) {
+            console.error('db insert error', err);
+          }
+        })
         .catch(() => res.sendStatus(500));
     }
   });

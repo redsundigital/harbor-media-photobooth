@@ -23,14 +23,16 @@ async function sendAttachment(to, filename, filepath) {
     const options = {
       ...mailOptions,
       to,
-      html: `<img src="cid:${filename}"/>`,
       attachments: [
         {
           filename,
           path: filepath,
           cid: filename
         }
-      ]
+      ],
+      html: `<img src="cid:${filename}"/>
+      <br/>
+      <p>This is an automatically generated email. Thanks for trying our photobooth app!</p>`
     };
 
     transporter.sendMail(options, (err, info) => {

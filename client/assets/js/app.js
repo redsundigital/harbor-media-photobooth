@@ -321,7 +321,7 @@ function nextState(forceState) {
   switch (state) {
     case states.INITITAL_START:
       camera = new Camera(ui.video, ui.canvas);
-      camera.startStream();
+      // camera.startStream();
       nextState();
       break;
     case states.STARTUP:
