@@ -278,7 +278,7 @@ class CountdownTimer {
       this.onUpdate(this.tick);
       this.tick--;
     } else {
-      this.stop();
+      this.tick = this.startTime;
     }
   }
 }
@@ -321,7 +321,7 @@ function nextState(forceState) {
   switch (state) {
     case states.INITITAL_START:
       camera = new Camera(ui.video, ui.canvas);
-      // camera.startStream();
+      camera.startStream();
       nextState();
       break;
     case states.STARTUP:
@@ -352,6 +352,7 @@ function nextState(forceState) {
       break;
   }
 }
+nextState();
 nextState();
 
 /* SMS FEATURE: Removed for now, don't need sms for 9/27 trial. */

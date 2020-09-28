@@ -8,8 +8,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "watch": "nodemon server.js",
-    "mail-test": "node mailer.js"
+    "watch": "nodemon server.js"
   },
   "repository": {
     "type": "git",
