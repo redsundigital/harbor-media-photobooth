@@ -279,6 +279,7 @@ class CountdownTimer {
       this.tick--;
     } else {
       this.tick = this.startTime;
+      this.stop();
     }
   }
 }
@@ -352,7 +353,6 @@ function nextState(forceState) {
       break;
   }
 }
-nextState();
 nextState();
 
 /* SMS FEATURE: Removed for now, don't need sms for 9/27 trial. */
