@@ -1,3 +1,27 @@
+## TODO 10/8/2020
+- App is actually two separate apps, located at two different urls.
+  - Camera app views: 
+    1. qr code to bind remote app to camera app
+    2. camera preview (video)
+    3. photo results
+  - Remote app views:
+    1. "Welcome" screen that tells users to scan a qr code. This is all they can do for now.
+      1.1 Welcome screen has a qr code scanner
+    2. "Controls" screen with different controls for before and after pictures are taken
+      (before)
+      - Exit
+      - Start Timer
+      - Timer Setpoint
+      - Filters (later?)
+
+      (after)
+      - Exit
+      - Stop Timer (during timer countdown) | Redo
+      - Save
+      - Filters (later?)
+      - Send (Email only right now)
+
+
 ## Camera View
 
 - [x] Camera preview
