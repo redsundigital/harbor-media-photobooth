@@ -1,19 +1,18 @@
 require('dotenv').config();
 const nodemailer = require('nodemailer');
-const utils = require('./utils.js');
-
+const utils = require('./');
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   auth: {
     user: process.env.NODEMAILER_USER,
-    pass: process.env.NODEMAILER_PASS
-  }
+    pass: process.env.NODEMAILER_PASS,
+  },
 });
 
 const mailOptions = {
   from: `"Harbor Media Photobooth" <${process.env.NODEMAILER_USER}>`,
-  subject: 'Your photobooth image'
+  subject: 'Your photobooth image',
 };
 
 async function sendAttachment(to, filename, filepath) {
@@ -27,12 +26,12 @@ async function sendAttachment(to, filename, filepath) {
         {
           filename,
           path: filepath,
-          cid: filename
-        }
+          cid: filename,
+        },
       ],
       html: `<img src="cid:${filename}"/>
       <br/>
-      <p>This is an automatically generated email. Thanks for trying our photobooth app!</p>`
+      <p>This is an automatically generated email. Thanks for trying our photobooth app!</p>`,
     };
 
     transporter.sendMail(options, (err, info) => {
@@ -42,7 +41,10 @@ async function sendAttachment(to, filename, filepath) {
       } else {
         // Done with image, delete it:
         utils.deleteFile(filepath);
-        console.log('mailer >', `attachment ${filename} successfully sent to ${to}: ${info.response}`);
+        console.log(
+          'mailer >',
+          `attachment ${filename} successfully sent to ${to}: ${info.response}`
+        );
         resolve(info);
       }
     });

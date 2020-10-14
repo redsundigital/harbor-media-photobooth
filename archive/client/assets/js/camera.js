@@ -1,13 +1,16 @@
 /* GLOBAL */
 
-/** Applications states. (fake enum) */
+// const re = /\/camera\/test/;
+// console.log(re.test(window.location.pathname));
+
+/** Applications states. (enum) */
 const states = {
   INITITAL_START: 'initial_start',
   STARTUP: 'startup',
   PREVIEW: 'preview',
   TIMER: 'timer',
-  RESULT: 'result'
-}
+  RESULT: 'result',
+};
 /** Default application state. */
 let state = null;
 
@@ -20,7 +23,7 @@ const utils = {
   validateEmail: function (email) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
-  }
+  },
 };
 /** Wrapper for html elements. */
 const ui = {
@@ -66,9 +69,9 @@ const ui = {
     }
   },
   setTimerProgress: (percent) => {
-    const offset = circumference - percent / 100 * circumference;
+    const offset = circumference - (percent / 100) * circumference;
     ui.timerProgressCircle.style.strokeDashoffset = offset;
-  }
+  },
 };
 
 // Progress circle setup
@@ -84,8 +87,6 @@ ui.clearEmailBtn.onclick = clearEmailInput;
 ui.sendEmailBtn.onclick = handleSendEmailClick;
 ui.emailInput.addEventListener('input', handleEmailInput);
 ui.stopTimerBtn.onclick = () => nextState(states.PREVIEW);
-
-
 
 /* UI HANDLERS */
 
@@ -108,7 +109,7 @@ function handleSendEmailClick() {
   const recipient = ui.emailInput.value;
 
   ui.setEnabled(ui.sendEmailBtn, false);
-  ui.sendEmailBtn.classList = "";
+  ui.sendEmailBtn.classList = '';
   ui.sendEmailBtn.innerHTML = 'Sending...';
   ui.sendEmailBtn.classList.add('sending');
 
@@ -118,7 +119,7 @@ function handleSendEmailClick() {
       ui.sendEmailBtn.classList.add('sent');
       clearEmailInput(false);
     })
-    .catch(xhr => {
+    .catch((xhr) => {
       console.log(xhr);
       ui.setEnabled(ui.sendEmailBtn, false);
       ui.setEnabled(ui.sendEmailBtn, true);
@@ -148,7 +149,7 @@ async function sendEmailWithSnapshot(to, snapshot) {
         console.error(xhr.status, xhr.responseText);
         reject(xhr);
       }
-    }
+    };
     xhr.send(snapshot);
   });
 }
@@ -166,15 +167,15 @@ class Camera {
     this.canvasQuality = 1;
     /** Base64 string of the snapshot taken. */
     this.snapshot = null;
-    /** 
-     * Options to apply when getting user media devices 
+    /**
+     * Options to apply when getting user media devices
      * from navigator when stream starts.
      */
     this.videoParams = {
       audio: false,
       video: {
-        facingMode: 'user'
-      }
+        facingMode: 'user',
+      },
     };
 
     this.init();
@@ -195,14 +196,15 @@ class Camera {
     if (this.streamStarted) return;
 
     if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia(this.videoParams)
-        .then(stream => {
+      navigator.mediaDevices
+        .getUserMedia(this.videoParams)
+        .then((stream) => {
           this.video.srcObject = stream;
           this.streamStarted = true;
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
-          alert('Stream error: ' + err)
+          alert('Stream error: ' + err);
         });
     } else {
       console.error('navigator.mediaDevices.getUserMedia is false');
@@ -232,7 +234,7 @@ class Camera {
  */
 class CountdownTimer {
   /**
-   * 
+   *
    * @param {number} startTime Seconds to start the timer at.
    * @param {Function} onUpdate Returns `tick` before it's updated.
    * @param {Function} onStop Called when the timer has been stopped.
@@ -284,7 +286,6 @@ class CountdownTimer {
   }
 }
 
-
 function handleCountdownTimerUpdate(tick) {
   // Update countdown text
   ui.countdownText.innerHTML = tick;
@@ -297,8 +298,6 @@ function handleCountdownTimerStop() {
   }
 }
 
-
-
 /* MAIN */
 
 function nextState(forceState) {
@@ -307,16 +306,28 @@ function nextState(forceState) {
     state = forceState;
   } else {
     switch (state) {
-      case null: state = states.INITITAL_START; break;
-      case states.INITITAL_START: state = states.PREVIEW; break;
-      case states.STARTUP: state = states.PREVIEW; break;
-      case states.PREVIEW: state = states.TIMER; break;
-      case states.TIMER: state = states.RESULT; break;
-      case states.RESULT: state = states.STARTUP; break;
-      default: break;
+      case null:
+        state = states.INITITAL_START;
+        break;
+      case states.INITITAL_START:
+        state = states.PREVIEW;
+        break;
+      case states.STARTUP:
+        state = states.PREVIEW;
+        break;
+      case states.PREVIEW:
+        state = states.TIMER;
+        break;
+      case states.TIMER:
+        state = states.RESULT;
+        break;
+      case states.RESULT:
+        state = states.STARTUP;
+        break;
+      default:
+        break;
     }
   }
-
 
   // State onChange
   switch (state) {
@@ -340,7 +351,7 @@ function nextState(forceState) {
       ui.fadeOut(ui.views.home);
       ui.fadeIn(ui.views.timer);
       // Note: timer stop is handled by time, use onStop callback below to trigger new state.
-      timer = new CountdownTimer(5, handleCountdownTimerUpdate, handleCountdownTimerStop)
+      timer = new CountdownTimer(5, handleCountdownTimerUpdate, handleCountdownTimerStop);
       timer.start();
       break;
     case states.RESULT:
