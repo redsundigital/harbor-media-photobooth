@@ -4,9 +4,10 @@
   "main": "server/server.js",
   "scripts": {
     "start": "cd server && npm run start",
-    "heroku-postbuild": "cd client && npm i && npm run build",
-    "server:watch": "cd server && npm run watch",
-    "client:start": "cd client && npm run start"
+    "start:dev": "concurrently \"npm run watch:server\" \"npm run start:client\"",
+    "start:client": "cd client && npm run start",
+    "watch:server": "cd server && npm run watch",
+    "heroku-postbuild": "cd client && npm i && npm run build"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/redsundigital/harbor-media-photobooth/issues"
   },
-  "homepage": "https://github.com/redsundigital/harbor-media-photobooth#readme"
+  "homepage": "https://github.com/redsundigital/harbor-media-photobooth#readme",
+  "devDependencies": {
+    "concurrently": "^5.3.0"
+  }
 }
