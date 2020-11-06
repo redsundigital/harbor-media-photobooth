@@ -9,29 +9,31 @@ const config = {
 };
 
 let dbconn;
+let reconnected = false;
 
 /**
  * Connects and reconnects on error.
  */
-function handleDisconnect() {
+function connect() {
   dbconn = mysql.createConnection(config);
 
   dbconn.connect((err) => {
     if (err) return console.error(err);
+    if (reconnected) return;
+    reconnected = true;
     return console.log('database connected');
-    // return console.log(`connected to ${config.database} : ${config.user}@${config.host}`);
   });
 
   // Reconnect on connection lost from idle
   dbconn.on('error', (err) => {
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      handleDisconnect();
+      connect();
     } else {
       throw err;
     }
   });
 }
 
-handleDisconnect();
+connect();
 
 module.exports = dbconn;

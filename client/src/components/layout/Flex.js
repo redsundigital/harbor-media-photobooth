@@ -24,11 +24,11 @@ const StyledFlex = styled.div`
   justify-content: ${(props) => (props.center ? 'center' : props.justify)};
 `;
 
-function Flexbox(props) {
+function Flex(props) {
   return <StyledFlex {...props}>{props.children}</StyledFlex>;
 }
 
-Flexbox.propTypes = {
+Flex.propTypes = {
   align: PropTypes.string,
   justify: PropTypes.string,
   center: PropTypes.bool,
@@ -39,4 +39,4 @@ Flexbox.propTypes = {
   fullscreen: PropTypes.bool,
 };
 
-export default Flexbox;
+export default Flex;

@@ -13,3 +13,7 @@ export const makeId = (length) => {
   }
   return result;
 };
+
+export function getPairIdFromUrl() {
+  console.log(window.location.pathname);
+}

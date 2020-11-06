@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Flexbox } from 'components';
+import { Flex } from 'components';
 
 function Home() {
   return (
-    <Flexbox fullscreen center column>
+    <Flex fullscreen center column>
       <span>Home</span>
       <br />
-      <Link to="/camera">Camera</Link>
-    </Flexbox>
+      <Link to="/kiosk">Kiosk</Link>
+    </Flex>
   );
 }
 

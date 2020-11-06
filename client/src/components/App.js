@@ -1,12 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
 import { SocketContext } from 'contexts';
-import socket from 'utils/socket';
-import { Home } from 'views';
-import { Camera, Preview } from 'views/camera';
-import { Remote } from 'views/remote';
 import { StoreProvider } from 'store.js';
+import socket from 'utils/socket';
+
+import { Home, Kiosk, Preview, Remote } from 'components';
 
 function App() {
   return (
@@ -14,8 +12,8 @@ function App() {
       <StoreProvider>
         <SocketContext.Provider value={socket}>
           <Switch>
-            <Route path="/camera/:pairId/preview" component={Preview} />
-            <Route path="/camera" component={Camera} />
+            <Route path="/kiosk/:pairId/preview" component={Preview} />
+            <Route path="/kiosk" component={Kiosk} />
             <Route path="/remote" component={Remote} />
             <Route path="/" component={Home} />
           </Switch>

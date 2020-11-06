@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-// import io from 'socket.io-client';
-
+import React, { useEffect, useContext } from 'react';
 import { SocketContext } from 'contexts';
-import { Flexbox } from 'components';
 
-// const socket = io.connect();
+import { Flex } from 'components';
 
 /**
  * Extracts the camera ID from the window pathname.
@@ -24,9 +21,9 @@ function Remote() {
   });
 
   return (
-    <Flexbox fullscreen center column>
+    <Flex fullscreen center column>
       <p>Remote {pairId}</p>
-    </Flexbox>
+    </Flex>
   );
 }
 

@@ -24,11 +24,10 @@ app.get('*', (req, res) => res.sendFile(indexHtml));
 
 // Socket setup
 const io = socketIO(server);
-
 io.on('connection', (socket) => {
-  socket.on('camera-ready', (data) => {
+  socket.on('kiosk-ready', (data) => {
     const { pairId } = data;
-    console.log('camera-ready', data);
+    console.log('kiosk-ready', data);
   });
 
   socket.on('remote-ready', (data) => {
@@ -42,7 +41,7 @@ io.on('connection', (socket) => {
 
   // TODO: remove once Preview view is done on client-side
   socket.on('preview', () => {
-    console.log('test');
+    console.log('preview-ready');
   });
 
   // socket.on('disconnect', () => console.log('client disconnected'));
@@ -50,5 +49,3 @@ io.on('connection', (socket) => {
 
 // Start
 server.listen(PORT, () => console.log('server listening on port ' + PORT));
-
-console.clear();
