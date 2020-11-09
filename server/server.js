@@ -36,16 +36,8 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('take-snapshot', id);
   });
 
-  socket.on('clear-snapshot', (id) => {
-    socket.broadcast.emit('clear-snapshot', id);
-  });
-
-  socket.on('snapshot-taken', (id) => {
-    socket.broadcast.emit('snapshot-taken', id);
-  });
-
-  socket.on('snapshot-cleared', (id) => {
-    socket.broadcast.emit('snapshot-cleared', id);
+  socket.on('snapshot-taken', (data) => {
+    socket.broadcast.emit('snapshot-taken', data);
   });
 });
 

@@ -27,7 +27,6 @@ function CameraStream(props) {
   const videoRef = useRef();
   const canvasRef = useRef();
   const mediaStream = useUserMedia(userMediaOptions);
-  const [isCanvasEmpty, setIsCanvasEmpty] = useState(true);
   const { kioskId } = props;
 
   // Set the video element's source to the media stream if valid.
@@ -63,8 +62,8 @@ function CameraStream(props) {
       videoRef.current.offsetHeight // dest Height
     );
 
-    // canvasRef.current.toBlob((blob) => ongotpointercapture(blob), 'image/jpeg', 1);
-    setIsCanvasEmpty(false);
+    const dataUrl = canvasRef.current.toDataURL('image/jpeg', 1);
+    return dataUrl;
   }
 
   /**
@@ -73,21 +72,15 @@ function CameraStream(props) {
   function handleClear() {
     const context = canvasRef.current.getContext('2d');
     context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    setIsCanvasEmpty(true);
   }
 
   useEffect(() => {
     // When a remote app requests a snapshot:
     socket.on('take-snapshot', (remoteId) => {
       if (kioskId !== remoteId) return;
-      handleCapture();
-      socket.emit('snapshot-taken', kioskId);
-    });
-
-    socket.on('clear-snapshot', (remoteId) => {
-      if (kioskId !== remoteId) return;
+      const base64Image = handleCapture();
       handleClear();
-      socket.emit('snapshot-cleared', kioskId);
+      socket.emit('snapshot-taken', { kioskId, base64Image });
     });
   }, []);
 
@@ -97,8 +90,7 @@ function CameraStream(props) {
       <CaptureCanvas
         ref={canvasRef}
         width={videoRef.current?.offsetWidth}
-        height={videoRef.current?.offsetHeight}
-        onClick={isCanvasEmpty ? handleCapture : handleClear}></CaptureCanvas>
+        height={videoRef.current?.offsetHeight}></CaptureCanvas>
     </VideoContainer>
   );
 }
