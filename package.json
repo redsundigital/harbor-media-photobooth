@@ -7,7 +7,7 @@
     "start:dev": "concurrently \"npm run watch:server\" \"npm run start:client\"",
     "start:client": "cd client && npm run start",
     "watch:server": "cd server && npm run watch",
-    "heroku-postbuild": "cd client && npm i && npm run build",
+    "heroku-postbuild": "install-all && cd client && npm run build",
     "install-all": "npm i && cd server && npm i && cd ../client && npm i"
   },
   "repository": {

@@ -14,6 +14,14 @@ Production
 Development
 `npm run start:dev`
 
+#### Deploy (Heroku)
+
+Master branch
+`git push heroku master`
+
+Other local branch
+`git push heroku your-local-branch:master`
+
 # Kiosk
 
 # Remote
