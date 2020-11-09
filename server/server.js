@@ -24,27 +24,29 @@ app.get('*', (req, res) => res.sendFile(indexHtml));
 
 // Socket setup
 const io = socketIO(server);
+
 io.on('connection', (socket) => {
-  socket.on('kiosk-ready', (data) => {
-    const { pairId } = data;
-    console.log('kiosk-ready', data);
+  // On remote app loaded:
+  socket.on('remote-connected', (id) => {
+    // Send message to kiosks with the remote id
+    socket.broadcast.emit('remote-connected', id);
   });
 
-  socket.on('remote-ready', (data) => {
-    const { pairId } = data;
-    console.log('remote-ready', data);
-
-    // Broadcast the pairId to all sockets,
-    // the client is listening for its pairId to continue.
-    socket.broadcast.emit(pairId, { pairId });
+  socket.on('take-snapshot', (id) => {
+    socket.broadcast.emit('take-snapshot', id);
   });
 
-  // TODO: remove once Preview view is done on client-side
-  socket.on('preview', () => {
-    console.log('preview-ready');
+  socket.on('clear-snapshot', (id) => {
+    socket.broadcast.emit('clear-snapshot', id);
   });
 
-  // socket.on('disconnect', () => console.log('client disconnected'));
+  socket.on('snapshot-taken', (id) => {
+    socket.broadcast.emit('snapshot-taken', id);
+  });
+
+  socket.on('snapshot-cleared', (id) => {
+    socket.broadcast.emit('snapshot-cleared', id);
+  });
 });
 
 // Start

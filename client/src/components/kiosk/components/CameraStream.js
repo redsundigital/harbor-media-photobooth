@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useUserMedia } from '../hooks';
 import { CaptureCanvas, VideoContainer, VideoPlayer } from 'components/styled';
+import socket from 'utils/socket';
 
 /**
  * Options to use once media permission is granted.
@@ -22,11 +23,12 @@ const userMediaOptions = {
  * https://blog.logrocket.com/responsive-camera-component-react-hooks/
  * Also has stuff for video positioning and camera snapshot.
  */
-function CameraStream() {
+function CameraStream(props) {
   const videoRef = useRef();
   const canvasRef = useRef();
   const mediaStream = useUserMedia(userMediaOptions);
   const [isCanvasEmpty, setIsCanvasEmpty] = useState(true);
+  const { kioskId } = props;
 
   // Set the video element's source to the media stream if valid.
   if (mediaStream && videoRef.current && !videoRef.current.srcObject) {
@@ -73,6 +75,21 @@ function CameraStream() {
     context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
     setIsCanvasEmpty(true);
   }
+
+  useEffect(() => {
+    // When a remote app requests a snapshot:
+    socket.on('take-snapshot', (remoteId) => {
+      if (kioskId !== remoteId) return;
+      handleCapture();
+      socket.emit('snapshot-taken', kioskId);
+    });
+
+    socket.on('clear-snapshot', (remoteId) => {
+      if (kioskId !== remoteId) return;
+      handleClear();
+      socket.emit('snapshot-cleared', kioskId);
+    });
+  }, []);
 
   return (
     <VideoContainer>

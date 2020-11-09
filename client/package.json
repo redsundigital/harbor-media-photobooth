@@ -9,6 +9,7 @@
     "axios": "^0.20.0",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
+    "query-string": "^6.13.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-measure": "^2.5.2",

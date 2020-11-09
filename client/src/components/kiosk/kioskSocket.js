@@ -8,5 +8,9 @@ export const kioskSocket = {
     // Listen for a reply from server with a matching pair ID,
     // then callback with onPair.
     socket.on(pairId, onPair);
+
+    socket.on('snapshot-response', (data) => {
+      console.log(1, data);
+    });
   },
 };
