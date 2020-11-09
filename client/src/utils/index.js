@@ -4,7 +4,7 @@
  *
  * @param {Number} length Length of the id created.
  */
-export const makeId = (length) => {
+export const generateId = (length) => {
   let result = '';
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; //abcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
@@ -13,7 +13,3 @@ export const makeId = (length) => {
   }
   return result;
 };
-
-export function getPairIdFromUrl() {
-  console.log(window.location.pathname);
-}

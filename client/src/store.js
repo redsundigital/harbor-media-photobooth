@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { makeId } from 'utils';
+import { generateId } from 'utils';
 
 const StoreContext = createContext();
 
@@ -8,7 +8,7 @@ export const actionTypes = {
 };
 
 const initialState = {
-  pairId: makeId(6),
+  pairId: generateId(6),
 };
 
 const reducer = (state, action) => {

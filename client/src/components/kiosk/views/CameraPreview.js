@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { Flex } from 'components';
-import CameraStream from './CameraStream';
+import CameraStream from '../components/CameraStream';
 
-function Preview() {
+function CameraPreview() {
   return (
     <Flex fullscreen center column>
       <CameraStream />
@@ -12,4 +12,4 @@ function Preview() {
   );
 }
 
-export default Preview;
+export default CameraPreview;

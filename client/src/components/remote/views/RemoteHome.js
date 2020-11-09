@@ -11,7 +11,7 @@ function getPairIdFromPath() {
   return pathname.replace('/remote/', '');
 }
 
-function Remote() {
+function RemoteHome() {
   const socket = useContext(SocketContext);
   const pairId = getPairIdFromPath();
 
@@ -27,4 +27,4 @@ function Remote() {
   );
 }
 
-export default Remote;
+export default RemoteHome;

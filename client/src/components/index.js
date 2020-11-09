@@ -5,8 +5,8 @@ export { default as Home } from './Home';
 export { default as Flex } from './layout/Flex';
 
 // Kiosk
-export { default as Kiosk } from './kiosk/Kiosk';
-export { default as Preview } from './kiosk/Preview';
+export { default as KioskHome } from './kiosk/views/KioskHome';
+export { default as CameraPreview } from './kiosk/views/CameraPreview';
 
 // Remote
-export { default as Remote } from './remote/Remote';
+export { default as RemoteHome } from './remote/views/RemoteHome';

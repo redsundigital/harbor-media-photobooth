@@ -4,7 +4,7 @@ import { SocketContext } from 'contexts';
 import { StoreProvider } from 'store.js';
 import socket from 'utils/socket';
 
-import { Home, Kiosk, Preview, Remote } from 'components';
+import { Home, KioskHome, CameraPreview, RemoteHome } from 'components';
 
 function App() {
   return (
@@ -12,9 +12,9 @@ function App() {
       <StoreProvider>
         <SocketContext.Provider value={socket}>
           <Switch>
-            <Route path="/kiosk/:pairId/preview" component={Preview} />
-            <Route path="/kiosk" component={Kiosk} />
-            <Route path="/remote" component={Remote} />
+            <Route path="/kiosk/:pairId/preview" component={CameraPreview} />
+            <Route path="/kiosk" component={KioskHome} />
+            <Route path="/remote" component={RemoteHome} />
             <Route path="/" component={Home} />
           </Switch>
         </SocketContext.Provider>
